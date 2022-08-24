@@ -1,16 +1,64 @@
 <template>
-  <NavBar/>
-  <div id="Container">
-    <h1>Take A Ride!</h1>
+  <NavBar />
+  <div class="container text-center mt-5 mb-5">
+    <h1 class="mt-5 fw-bolder text-success">Student's Database</h1>
+    <div class="table-responsive my-5">
+      <!-- The table component -->
+      <MyTable :fields="fields" :studentData="studentData"></MyTable>
+    </div>
   </div>
 </template>
 
 <script>
 import NavBar from "../components/organisms/NavBar.vue";
+import MyTable from "../components/molecules/MyTable.vue";
 
 export default {
-    components: { NavBar },
-  };
+  name: "App",
+  components: { NavBar, MyTable },
+  data() {
+    return { 
+        studentData :[
+            {
+                ID: "01",
+                Name: "Abiola Esther",
+                Course: "Computer Science",
+                Gender: "Female",
+                Age: "17",
+            },
+            {
+                ID: "02",
+                Name: "Robert V. Kratz",
+                Course: "Philosophy",
+                Gender: "Male",
+                Age: "19",
+            },
+            {
+                ID: "03",
+                Name: "Kristen Anderson",
+                Course: "Economics",
+                Gender: "Female",
+                Age: "20",
+            },
+            {
+                ID: "04",
+                Name: "Adam Simon",
+                Course: "Food science",
+                Gender: "Male",
+                Age: "21",
+            },
+            {
+                ID: "05",
+                Name: "Daisy Katherine",
+                Course: "Business studies",
+                Gender: "Female",
+                Age: "22",
+            },
+        ],
+        fields : ["ID", "Name", "Course", "Gender", "Age"],
+    };
+  },
+};
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

@@ -2,15 +2,16 @@
   <table id="tableComponent" class="table table-bordered table-striped">
     <thead>
       <tr>
-        <!-- loop through each value of the fields to get the table header -->
-        <th  v-for="field in fields" :key='field' @click="sortTable(field)" > 
-          {{field}} <i class="bi bi-sort-alpha-down" aria-label='Sort Icon'></i>
+        <!-- loop through each value of the fields to get the table header 
+        @click="sortTable(field)"-->
+        <th  v-for="column in fields" :key='column'> 
+          {{column}} <i class="bi bi-sort-alpha-down" aria-label='Sort Icon'></i>
         </th>
       </tr>
     </thead>
     <tbody>
         <!-- Loop through the list get the each student data -->
-        <tr v-for="item in filteredList" :key='item'>
+        <tr v-for="item in studentData" :key='item'>
         <td v-for="field in fields" :key='field'>{{item[field]}}</td>
       </tr>
     </tbody>
@@ -28,6 +29,9 @@ export default {
           type: Array,
       }
   }, 
+  mounted(){
+    console.log('table mounted')
+  },
 }
 </script>
 

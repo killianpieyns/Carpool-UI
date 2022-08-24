@@ -3,7 +3,7 @@
   <div class="auth">
     <div class="auth-from">
       <h2>Login</h2>
-      <form class="login-form" method="post">
+      <form class="form" method="post">
         <p v-for="(error, index) in errors" :key="index">{{ error }}</p>
         <my-input
           id="email"
@@ -58,4 +58,13 @@ export default {
 };
 </script>
 
-<style scoped lang="sccs"></style>
+<style scoped lang="scss">
+  form {
+    max-width: 420px;
+    margin: 30px auto;
+    background: white;
+    text-align: left;
+    padding: 40px;
+    border-radius: 10px;
+  }
+</style>

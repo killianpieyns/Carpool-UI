@@ -1,5 +1,5 @@
 <template>
-  <NavBar/>
+  <NavBar />
   <div class="auth">
     <div class="auth-from">
       <h2>Register</h2>
@@ -22,7 +22,7 @@
           autocomplete="Doe"
           v-model.trim="email"
         />
-        
+
         <my-input
           id="email"
           label="Email"
@@ -70,7 +70,6 @@ import MyButton from "../components/atoms/MyButton.vue";
 import MyInput from "../components/atoms/MyInput.vue";
 import NavBar from "../components/organisms/NavBar.vue";
 
-
 export default {
   components: { MyInput, MyButton, NavBar },
   data() {
@@ -80,8 +79,16 @@ export default {
       submitted: false,
     };
   },
-
 };
 </script>
 
-<style scoped lang="sccs"></style>
+<style scoped lang="scss">
+    form {
+    max-width: 420px;
+    margin: 30px auto;
+    background: white;
+    text-align: left;
+    padding: 40px;
+    border-radius: 10px;
+  }
+</style>

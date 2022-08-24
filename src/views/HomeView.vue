@@ -1,5 +1,5 @@
 <template>
-  <NavBar/>
+  <NavBar />
   <div id="Container">
     <MyMap />
   </div>
@@ -10,8 +10,8 @@ import MyMap from "../components/molecules/MyMap.vue";
 import NavBar from "../components/organisms/NavBar.vue";
 
 export default {
-    components: { MyMap, NavBar },
-  };
+  components: { MyMap, NavBar },
+};
 </script>
 
 <style scoped></style>
