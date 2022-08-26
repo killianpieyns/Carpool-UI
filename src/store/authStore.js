@@ -109,13 +109,6 @@ export default {
           commit("setIsLoading", false);
         });
     },
-    async tryAutoLogin({ commit, dispatch }) {
-      if (document.cookie.indexOf("XSRF-TOKEN") === -1) {
-        commit("setAuthenticated", false);
-      } else {
-        await dispatch("fetchUser");
-      }
-    },
     emptyError({ commit }) {
       commit("setError", "");
     },
