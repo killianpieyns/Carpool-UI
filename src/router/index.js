@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,6 +8,10 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: () => import("../views/HomeView.vue"),
+      meta:{
+        title: 'Home',
+        requiresAuth: true,
+      }
     },
     {
       path: "/login",
@@ -31,7 +36,7 @@ const router = createRouter({
       name: "rides",
       component: () => import("../views/RidesView.vue"),
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
         title: "Rides",
       },
     },
@@ -41,4 +46,20 @@ const router = createRouter({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => 
+{
+  document.title = to.meta.title;
+
+  if (to.meta.requiresAuth && !store.getters["auth/authenticated"]) {
+    next({ 
+      path: "/login" ,
+      query: { redirect: to.fullPath }
+    });
+    return;
+  }
+
+  next();
+});
+
 export default router;

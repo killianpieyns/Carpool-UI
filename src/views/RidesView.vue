@@ -1,64 +1,72 @@
 <template>
-  <NavBar />
-  <div class="container text-center mt-5 mb-5">
-    <h1 class="mt-5 fw-bolder text-success">Student's Database</h1>
-    <div class="table-responsive my-5">
-      <!-- The table component -->
-      <MyTable :fields="fields" :studentData="studentData"></MyTable>
-    </div>
+  <nav-bar :authenticated="authenticated"/>
+  <my-loader v-if="isLoading" />
+  <div id="main-content">
+    <h1>Rides</h1>
+    <my-table v-if="this.errors == 0" class="myTable" :fields="fields" :rides="rides" />
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import NavBar from "../components/organisms/NavBar.vue";
 import MyTable from "../components/molecules/MyTable.vue";
+import MyLoader from "../components/atoms/MyLoader.vue";
+
 
 export default {
   name: "App",
-  components: { NavBar, MyTable },
+  components: { NavBar, MyTable, MyLoader },
   data() {
-    return { 
-        studentData :[
-            {
-                ID: "01",
-                Name: "Abiola Esther",
-                Course: "Computer Science",
-                Gender: "Female",
-                Age: "17",
-            },
-            {
-                ID: "02",
-                Name: "Robert V. Kratz",
-                Course: "Philosophy",
-                Gender: "Male",
-                Age: "19",
-            },
-            {
-                ID: "03",
-                Name: "Kristen Anderson",
-                Course: "Economics",
-                Gender: "Female",
-                Age: "20",
-            },
-            {
-                ID: "04",
-                Name: "Adam Simon",
-                Course: "Food science",
-                Gender: "Male",
-                Age: "21",
-            },
-            {
-                ID: "05",
-                Name: "Daisy Katherine",
-                Course: "Business studies",
-                Gender: "Female",
-                Age: "22",
-            },
-        ],
-        fields : ["ID", "Name", "Course", "Gender", "Age"],
-    };
+    return {
+      fields: ['id', 'user_id', 'time_departure', 'time_arrival', 'latitude_departure', 'longitude_departure', 'latitude_arrival', 'longitude_arrival', 'status', 'type', 'action'],
+    }
+    
   },
+  computed: {
+    ...mapGetters({
+      rides: "rides/rides",
+      isLoading: "rides/isLoading",
+      errors: "rides/errors",
+      authenticated: "auth/authenticated"
+    }),
+  },
+
+  methods: {
+    ...mapActions({
+      fetchRides: "rides/fetchRides",
+    }),
+  },
+  created() {
+    this.fetchRides();
+  },
+  watch: {
+    authenticated() {
+      this.$router.push({ name: "login" });
+    },
+  }
+
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  a.skiplink {
+    position: absolute;
+    top: -100%;
+    left: 0;
+
+    &:focus {
+      top: 0;
+    }
+  }
+
+#main-content{
+  margin: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+        
+</style>

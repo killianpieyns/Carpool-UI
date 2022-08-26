@@ -29,9 +29,8 @@ export default {
 <style scoped lang="scss">
 button {
   padding: 0.5rem 1.3rem;
-  margin: 1rem 0;
   text-transform: uppercase;
-  background: #a50909;
+  background: black;
   color: #ffffff;
   border-radius: 0.1rem;
   border: none;
@@ -40,6 +39,6 @@ button {
 
 button:hover {
   //cursor: pointer;
-  background: #8d1919;
+  background: rgba(0,136,169,0.8);
 }
 </style>

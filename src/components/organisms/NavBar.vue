@@ -1,79 +1,123 @@
 <template>
-  <nav>
-    <a href="#main-content" class="skiplink"> Skip to main content </a>
-    <div class="header-nav">
-      <ul>
+  <header>
+
+    <h1 class="logo"><router-link :to="{ name: 'home' }" class="link">Carpool</router-link></h1>
+    <nav>
+
+      <ul class="nav__links">
         <li>
-          <router-link :to="{ name: 'home' }">Home</router-link>
+          <router-link :to="{ name: 'home' }" class="link">Home</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'rides' }">Rides</router-link>
+          <router-link :to="{ name: 'rides' }" class="link">Rides</router-link>
         </li>
-        <li>
-          <router-link :to="{ name: 'login' }">Login</router-link>
+        <li v-if="!this.authenticated">
+          <router-link :to="{ name: 'login' }" class="link">Login</router-link>
         </li>
-        <li>
-          <router-link :to="{ name: 'register' }">Register</router-link>
+        <li v-if="!this.authenticated">
+          <router-link :to="{ name: 'register' }" class="link">Register</router-link>
         </li>
       </ul>
+    </nav>
+    <a href="#main-content" class="skiplink"> Skip to main content </a>
+    <div class="user" v-if="this.authenticated">
+          {{ user.name }}
+      </div>
+    <div class="logout" v-if="this.authenticated">
+        <my-button @click="this.logout" title="Logout" />
     </div>
-  </nav>
+
+  </header>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import MyButton from "../atoms/MyButton.vue";
 
+
 export default {
-  components: { MyButton },
+  components: {MyButton},
+  props:{
+    authenticated: {
+      type: Boolean,
+      required: true
+    }
+  },
+  computed: {
+      ...mapGetters({
+        user: "auth/user",
+      })
+  },
+  methods: {
+    ...mapActions({
+        logout: "auth/logout",
+    }),
+  }
 };
 </script>
 
 <style scoped lang="scss">
-nav {
-  width: 100%;
-  background-color: #f5f5f5;
-  margin-bottom: 1rem;
-  border-bottom: solid #e0e0e0 1px;
-  filter: drop-shadow(0px 2px 3px rgba(150, 150, 150, 0.25));
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
-  .header-nav {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: space-between;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #24252A;
+}
 
-    ul {
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      padding: 0;
-      list-style: none;
+li, .link, .skiplink, button {
+  font: 500 "Montserrat" sans-serif 16px;
+  color: #edf0f1;
+  text-decoration: none;
+}
 
-      .small-logo {
-        margin-right: 2.5rem;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+  height: 1px;
+}
+
+.logo {
+  cursor: pointer;
+  color: #edf0f1;
+}
+
+.nav__links {
+  list-style: none;
+
+  & li {
+    display: inline-block;
+    padding: 0px 20px;
+
+    .link{
+      transition: all 0.3s ease 0s;
+
+      &:hover {
+        color: #0088a9;
       }
-
-      li {
-        margin-right: 2rem;
-
-        a {
-          color: #969696;
-          text-decoration: none;
-        }
-
-        a:hover,
-        .active {
-          color: #000000;
-        }
-      }
-    }
-
-    .logout {
-      margin: 0;
     }
   }
 }
+
+a .skiplink {
+  margin-left: 20px;
+  padding: 9px 25px;
+  background-color: rgba(0,136,169,1);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+
+  &:hover {
+    background-color: rgba(0,136,169,0.8);
+  }
+}
+
+.user {
+  color: #edf0f1;
+}
+
 </style>
